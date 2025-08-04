@@ -41,7 +41,7 @@ export default function LoginPage() {
       setToken(data.token);
 
 
-      navigate("/");
+      navigate("/profile");
     } catch (err: any) {
       setError(err.message);
     } finally {
