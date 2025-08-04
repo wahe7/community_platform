@@ -3,13 +3,13 @@ const router = express.Router();
 
 const {PrismaClient} = require("../generated/prisma");
 const prisma = new PrismaClient();
+const authenticateToken = require("../middleware/authMiddleware");
 
-router.get("/:id", async (req, res) => {
-  const userId = req.params.id;
+router.get("/", authenticateToken, async (req, res) => {
     try {
         const user = await prisma.user.findUnique({
             where: {
-                id: parseInt(userId)
+                id: parseInt(req.user.id)
             },
             select:{
               name: true,
@@ -24,7 +24,7 @@ router.get("/:id", async (req, res) => {
 
         const posts = await prisma.post.findMany({
           where: {
-            authorId: parseInt(userId),
+            authorId: parseInt(req.user.id),
           },
         });
 
