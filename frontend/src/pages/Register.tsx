@@ -9,6 +9,7 @@ const Register = () => {
     name: "",
     email: "",
     password: "",
+    bio: "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -77,6 +78,19 @@ const Register = () => {
               required
               className="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
               placeholder="you@example.com"
+            />
+          </div>
+          <div>
+            <label htmlFor="bio" className="block text-sm font-medium text-gray-700">Bio</label>
+            <input
+              type="text"
+              name="bio"
+              id="bio"
+              value={form.bio}
+              onChange={handleChange}
+              required
+              className="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+              placeholder="Tell us about yourself"
             />
           </div>
           <div>
