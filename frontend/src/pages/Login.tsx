@@ -8,6 +8,7 @@ import { Label } from "../components/ui/label";
 import { Card, CardContent } from "../components/ui/card";
 import { Mail, Lock } from "lucide-react";
 import { motion } from "framer-motion";
+import { setToken } from "../lib/token";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -31,18 +32,15 @@ export default function LoginPage() {
       });
 
       const data = await response.json();
-      console.log("data", data);
 
       if (!response.ok) {
         throw new Error(data.message || "Login failed");
       }
 
       // ✅ Store token in localStorage
-      localStorage.setItem("token", data.token);
+      setToken(data.token);
 
-      console.log("Login success", data);
 
-      // Optionally redirect after login
       navigate("/");
     } catch (err: any) {
       setError(err.message);
