@@ -30,21 +30,47 @@ router.post("/", authenticateToken, async (req, res) => {
 // get post
 router.get("/", authenticateToken, async (req, res) => {
     try {
-        const posts = await prisma.post.findMany({
-            include: {
-                author:{
-                  select: {
-                    id: true,
-                    name: true,
-                    email: true,
-                    bio: true,
-                  },
-                },
+      const posts = await prisma.post.findMany({
+        include: {
+          author:{
+            select: {
+              id: true,
+              name: true,
+              email: true,
+              bio: true,
             },
-        });
-        return res.status(200).json(posts);
+          },
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+      });
+      return res.status(200).json(posts);
     } catch (error) {
-        return res.status(500).json({message: "Internal server error"});
+      return res.status(500).json({message: "Internal server error"});
+    }
+});
+
+router.get("/feed", async (req, res) => {
+    try {
+      const posts = await prisma.post.findMany({
+        include: {
+          author:{
+            select: {
+              id: true,
+              name: true,
+              email: true,
+              bio: true,
+            },
+          },
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+      });
+      return res.status(200).json(posts);
+    } catch (error) {
+      return res.status(500).json({message: "Internal server error"});
     }
 });
 
